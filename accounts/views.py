@@ -31,10 +31,14 @@ def user_register(request):
         email = request.POST['email']
         password = request.POST['password']
         password2 = request.POST['password2']
+        age= request.POST['age']
+        phone = request.POST['phone']
+        bio = request.POST['bio']
         if password == password2:
             user = User(username=username, email=email, password=password)
             user.set_password(password)
             user.save()
+            Profile.objects.create(user=user, age=age, phone_number=phone, bio=bio)
             return redirect('blog:index')
         else:
             return
