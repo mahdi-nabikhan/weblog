@@ -2,6 +2,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
+from blog.models import Post
+from .models import Profile
 
 # Create your views here.
 def user_login(request):
@@ -37,3 +39,10 @@ def user_register(request):
         else:
             return
     return render(request, template_name='forms/registeration.html')
+
+
+def profile(request):
+    profile = Profile.objects.get(user__id=request.user.id)
+    post = Post.objects.filter(author=profile.user)
+    context = {'user': profile, 'post': post}
+    return render(request, 'accounts/profile.html', context)

@@ -73,7 +73,7 @@ https://templatemo.com/tm-551-stand-blog
                 <li class="nav-item">
                     {% if request.user.is_authenticated %}
                         <div class="d-flex">
-                        <a class="nav-link" href="{% url 'accounts:login' %}">{{request.user}}</a>
+                        <a class="nav-link" href="{% url 'accounts:profile' %}">{{request.user}}</a>
                         <a href="{% url 'accounts:logout' %}"><span class="badge bg-danger mt-2"> Logout</span></a>
                     </div>
                     {% else %}
@@ -98,11 +98,11 @@ https://templatemo.com/tm-551-stand-blog
         <div class="owl-banner owl-carousel">
             {% for post in posts %}
           <div class="item">
-            <img src={{ post.image.url }} alt={{ post.title }}>
+            <img style="width: 400px;height: 200px" src={{ post.image.url }} alt={{ post.title }}>
             <div class="item-content">
               <div class="main-content">
                 <div class="meta-category">
-                  <span>{{post.category.name}}</span>
+                  <span>{{post.category.first.name}}</span>
                 </div>
                 <a href="post-details.html"><h4>{{ post.title }}</h4></a>
                 <ul class="post-info">
