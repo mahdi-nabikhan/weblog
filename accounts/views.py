@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from blog.models import Post
 from .models import Profile
 
+
 # Create your views here.
 def user_login(request):
     if request.user.is_authenticated:
@@ -31,7 +32,7 @@ def user_register(request):
         email = request.POST['email']
         password = request.POST['password']
         password2 = request.POST['password2']
-        age= request.POST['age']
+        age = request.POST['age']
         phone = request.POST['phone']
         bio = request.POST['bio']
         if password == password2:
@@ -50,3 +51,4 @@ def profile(request):
     post = Post.objects.filter(author=profile.user)
     context = {'user': profile, 'post': post}
     return render(request, 'accounts/profile.html', context)
+
