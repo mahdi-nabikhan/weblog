@@ -10,7 +10,7 @@ class Profile(models.Model):
     bio = models.TextField()
     age = models.PositiveIntegerField()
     email = models.EmailField()
-    phone_number = models.PositiveIntegerField(max_length=11)
+    phone_number = models.PositiveIntegerField()
 
     def __str__(self):
         return f'{self.user.username} {self.bio}'

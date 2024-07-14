@@ -1,0 +1,102 @@
+
+ <header class="">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="index.html"><h2>Stand Blog<em>.</em></h2></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'blog:index' %}">Home
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="blog.html">Blog Entries</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="post-details.html">Post Details</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html">Contact Us</a>
+              </li>
+                <li class="nav-item">
+                    {% if request.user.is_authenticated %}
+                        <div class="d-flex">
+                        <a class="nav-link" href="{% url 'accounts:profile' %}">{{request.user}}</a>
+                        <a href="{% url 'accounts:logout' %}"><span class="badge bg-danger mt-2"> Logout</span></a>
+                    </div>
+                    {% else %}
+                        <div class="d-flex">
+                        <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+                        <a class="nav-link" href="{% url 'accounts:register' %}">Register</a>
+                        </div>
+                    {% endif %}
+                
+                </li>
+            
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="main-banner header-text">
+      <div class="container-fluid">
+        <div class="owl-banner owl-carousel">
+            {% for post in posts %}
+          <div class="item">
+            <img style="width: 400px;height: 200px" src={{ post.image.url }} alt={{ post.title }}>
+            <div class="item-content">
+              <div class="main-content">
+                <div class="meta-category">
+                  <span>{{post.category.first.name}}</span>
+                </div>
+                <a href="{% url 'blog:detail' post.id %}"><h4>{{ post.title }}</h4></a>
+                <ul class="post-info">
+                  <li><a href="#">{{ post.author.username }}</a></li>
+                  <li><a href="#">{{ post.created_at }}</a></li>
+                  <li><a href="#">12 Comments</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+            {% endfor %}
+         
+        </div>
+      </div>
+    </div>
+
+{% block content %}
+    
+{% endblock %}
+ 
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="social-icons">
+              <li><a href="#">Facebook</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Behance</a></li>
+              <li><a href="#">Linkedin</a></li>
+              <li><a href="#">Dribbble</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-12">
+            <div class="copyright-text">
+              <p>Copyright 2020 Stand Blog Co.
+                    
+                 | Design: <a rel="nofollow" href="https://templatemo.com" target="_parent">TemplateMo</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
