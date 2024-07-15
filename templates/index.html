@@ -60,7 +60,7 @@ https://templatemo.com/tm-551-stand-blog
                 <div class="meta-category">
                   <span>{{post.category.first.name}}</span>
                 </div>
-                <a href="{{ post.get_absolute_url }}"><h4>{{ post.title }}</h4></a>
+                <a href="{% url 'blog:detail' post.pk %}"><h4>{{ post.title }}</h4></a>
                 <ul class="post-info">
                   <li><a href="#">{{ post.author.username }}</a></li>
                   <li><a href="#">{{ post.created_at }}</a></li>
@@ -116,7 +116,7 @@ https://templatemo.com/tm-551-stand-blog
                     </div>
                     <div class="down-content">
                       <span>Lifestyle</span>
-                      <a href="{{ post.get_absolute_url }}"><h4>{{ post.title }}</h4></a>
+                      <a href="{% url 'blog:detail' post.pk %}"><h4>{{ post.title }}</h4></a>
                       <ul class="post-info">
                         <li><a href="#">{{ post.author.username }}</a></li>
                         <li><a href="#">{{ post.created_at }}</a></li>

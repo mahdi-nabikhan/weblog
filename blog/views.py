@@ -1,7 +1,9 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from blog.models import *
 from .forms import *
+from django.views.generic import *
+
 
 # Create your views here.
 
@@ -12,14 +14,37 @@ def index(request):
     return render(request, template_name='index.html', context=context)
 
 
+class IndexView(TemplateView):
+    template_name = 'index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = Post.objects.all()
+        resent = post[:3]
+        context['resent'] = resent
+        context['posts'] = post
+        return context
+
+
 def post_detail(request, post_id):
     post = Post.objects.get(id=post_id)
     if request.method == 'POST':
         body = request.POST['body']
         comments.objects.create(content=body, post=post, author=request.user)
 
-    context = {'post': post}
-    return render(request=request, template_name='post-details.html', context=context)
+
+
+
+class PostDetailView(DetailView):
+    template_name = 'post-details.html'
+    model = Post
+
+    def post(self, request, *args, **kwargs):
+        new = self.get_object()
+        print(self.object)
+        body = self.request.POST['body']
+        comments.objects.create(content=body, author=request.user, post=new)
+        return render(request,self.template_name, {'post': new})
 
 
 def all_posts(request):
@@ -29,6 +54,11 @@ def all_posts(request):
     page_number = paginator.get_page(pages)
     context = {'posts': page_number}
     return render(request=request, template_name='post-list.html', context=context)
+class AllPostsView(ListView):
+    model = Post
+    template_name = 'post-list.html'
+    context_object_name = 'posts'
+    paginate_by = 2
 
 
 def category_detail(request, pk=None):
@@ -56,4 +86,4 @@ def add_post(request):
             post.save()
             return redirect('blog:index')
     context = {'form': form}
-    return render(request,template_name='forms/add_post.html', context=context)
+    return render(request, template_name='forms/add_post.html', context=context)

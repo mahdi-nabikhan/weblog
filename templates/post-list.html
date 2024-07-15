@@ -33,7 +33,7 @@
                     </div>
                     <div class="down-content">
                       <span>Lifestyle</span>
-                      <a href="{{ post.get_absolute_url }}"><h4>{{ post.title }}</h4></a>
+                      <a href="{% url 'blog:detail' post.pk %}"><h4>{{ post.title }}</h4></a>
                       <ul class="post-info">
                         <li><a href="#">{{ post.author.username }}</a></li>
                         <li><a href="#">{{ post.created_at }}</a></li>
@@ -85,7 +85,7 @@
                     <div class="content">
                       <ul>
                           {% for i in resent %}
-                        <li><a href="{{ i.get_absolute_url }}">
+                        <li><a href="{% url 'blog:detail' i.pk %}">
                           <h5>{{ i.title }}</h5>
                           <span>{{ i.created_at }}</span>
                         </a></li>
@@ -136,23 +136,23 @@
       </div>
     </section>
     <div class="col-lg-12">
-    {% if posts.has_other_pages %}
+    {% if page_obj.has_other_pages %}
         <ul class="page-numbers">
             
-                {% if posts.has_previous %}
-            <li><a href="?page={{ posts.previous_page_number }}"><i class="fa fa-angle-double-left"></i></a></li>
+                {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fa fa-angle-double-left"></i></a></li>
                 {% else %}
                     
                 {% endif %}
-        {% for page_number in posts.paginator.page_range %}
-            {% if posts.number == page_number %}
-            <li class="active"><a href="#">{{ page_number }}</a></li>
+        {% for page_number in page_obj.paginator.page_range %}
+            {% if page_obj.number == page_number %}
+            <li class="active"><a href="?page={{ page_obj.number }}">{{ page_number }}</a></li>
             {% else %}
                  <li><a href="#">{{ page_number }}</a></li>
             {% endif %}
         {% endfor %}
-        {% if posts.has_next %}
-            <li><a href="?page={{ posts.next_page_number }}"><i class="fa fa-angle-double-right"></i></a></li>
+        {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}"><i class="fa fa-angle-double-right"></i></a></li>
         
         {% endif %}    
         
