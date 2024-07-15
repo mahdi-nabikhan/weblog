@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
 from blog.models import *
-
+from .forms import *
 
 # Create your views here.
 
@@ -44,3 +44,16 @@ def search(request):
         posts = Post.objects.filter(title__icontains=query)
         context = {'posts': posts}
         return render(request, 'search.html', context)
+
+
+def add_post(request):
+    form = PostForm()
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('blog:index')
+    context = {'form': form}
+    return render(request,template_name='forms/add_post.html', context=context)

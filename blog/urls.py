@@ -10,5 +10,6 @@ urlpatterns = [
     path('all_posts/', all_posts, name='all_posts'),
     path('category/<int:pk>',category_detail,name='category_detail'),
     path('search/', search, name='search'),
+    path('add_post/', add_post, name='add_post'),
 
 ]
