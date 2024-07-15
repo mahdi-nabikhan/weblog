@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from django.core.paginator import Paginator
 from blog.models import *
 
 
@@ -20,7 +20,10 @@ def post_detail(request, post_id):
 
 def all_posts(request):
     posts = Post.objects.all()
-    context = {'posts': posts}
+    paginator=Paginator(posts, 2)
+    pages=request.GET.get('page')
+    page_number=paginator.get_page(pages)
+    context = {'posts': page_number}
     return render(request=request, template_name='post-list.html', context=context)
 
 
