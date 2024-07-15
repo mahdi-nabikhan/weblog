@@ -26,7 +26,7 @@ class Post(models.Model):
     slug = models.SlugField(unique=True, blank=True)
 
     class Meta:
-        ordering = ['-updated_at','-created_at']
+        ordering = ['-updated_at', '-created_at']
 
     def __str__(self):
         return f'{self.title} {self.description}'
@@ -37,3 +37,12 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:detail', kwargs={'post_id': self.id})
+
+
+class comments(models.Model):
+
+    content = models.TextField()
+    post=models.ForeignKey(Post, on_delete=models.CASCADE,related_name='comment')
+    created_at = models.DateTimeField(auto_now_add=True)
+    parent=models.ForeignKey('self',on_delete=models.CASCADE,related_name='replies',null=True,blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE,blank=True)

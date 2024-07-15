@@ -16,5 +16,7 @@ class PostAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'description')
 
-
+@admin.register(comments)
+class CommentsAdmin(admin.ModelAdmin):
+    list_display = ('author','content')
 
